@@ -1,14 +1,15 @@
 ﻿using Pokemon_Repository;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Pokemon_Console
 {
-    private class ProgramUI
+    class ProgramUI
     {
-        private PokemonRepository _Repo = new PokemonRepository();
+        private PokemonRepository _repo = new PokemonRepository();
         public void Run()
         {
             SeedPokemonTeam();
@@ -30,7 +31,6 @@ namespace Pokemon_Console
                 switch (response)
                 {
                     case 1:
-                        return;
                         SeeMyPokemonTeam();
                         Console.Clear();
                         break;
@@ -41,10 +41,11 @@ namespace Pokemon_Console
                         UpdateAPokemonMenu();
                         break;
                     case 4:
+                        UpdateAPokemon();
                         break;
                     case 5:
-                        continueToRun = false;
-
+                        continueToRunMenu = false;
+                        break;
                     default:
                         Console.WriteLine("Please enter a valid response.");
                         Console.ReadKey();
@@ -54,7 +55,7 @@ namespace Pokemon_Console
         }
         private void SeedPokemonTeam()
         {
-            Pokemon pika = new Pokemon("Pikachu", "Pikachu", 1, PokemonType.Electric, PokemonType.None, "Sand Attack", "Growl", "Quick Attack", "Tackle");
+            Pokemon pika = new Pokemon(71, "Pikachu", "Pikachu", 1, PokemonType.Electric, PokemonType.None, "Sand Attack", "Growl", "Quick Attack", "Tackle");
             _repo.AddPokemonToTeam(pika);
         }
         private void SeeMyPokemonTeam()
@@ -93,14 +94,18 @@ namespace Pokemon_Console
             {
                 Console.Clear();
                 Console.WriteLine("Lets add a new member to our team!" +
-                    "\n\nPokemon Species Name: ");
+                    "\n Enter Team Position: ");
+                //TO DO: convert int to string
+                //int.Parse teamPosition = Console.ReadLine();
+                    
+                Console.WriteLine("Pokemon Species Name: ");
                 string species = Console.ReadLine();
 
                 Console.WriteLine("Pokemon Nick Name: ");
                 string name = Console.ReadLine();
 
                 Console.WriteLine("Pokemon Level: ");
-                string pokeLevel = 
+                string pokeLevel = Console.ReadLine();
 
                 if (!pokeLevel.All(char.IsDigit))
                 {
@@ -159,7 +164,7 @@ namespace Pokemon_Console
                     string moveFour = Console.ReadLine();
 
 
-                    Pokemon newPokemon = new Pokemon(species, name, level, typeOne, typeTwo, moveOne, moveThree, moveFour);
+                    Pokemon newPokemon = new Pokemon(teamPosition, species, name, level, typeOne, typeTwo, moveOne, moveTwo, moveThree, moveFour);
                     _repo.AddPokemonToTeam(newPokemon);
                     Console.WriteLine("Pokemon added!");
                     Console.ReadKey();
@@ -212,7 +217,7 @@ namespace Pokemon_Console
                 UpdateAPokemon(response);
             }
         }
-        private void UpdateAPokemon( teamPosition)
+        private void UpdateAPokemon()
         {
             Pokemon pokemon = _repo.GetPokemonByTeamPosition(teamPosition);
             Console.Clear();
@@ -223,11 +228,11 @@ namespace Pokemon_Console
                   $"\nMove Three: {pokemon.MoveThree} - Move Four: {pokemon.MoveFour}");
             Console.WriteLine("Lets update this member of our team!" +
                     "\n\nPokemon Species Name: ");
-            string species = console.ReadLine();
+            string species = Console.ReadLine();
 
 
             Console.WriteLine("Pokemon Nick Name: ");
-            string name = Console.Readline();
+            string name = Console.ReadLine();
 
             Console.WriteLine("Pokemon Level: ");
             string pokeLevel = Console.ReadLine()
@@ -296,8 +301,8 @@ namespace Pokemon_Console
                 Console.ReadKey();
             }
             Console.Clear();
-
-            private void RemoveAPokemon()
+        }
+        private void RemoveAPokemon()
             {
                 List<Pokemon> pokemonTeam = _repo.GetPokemonTeam();
                 if (pokemonTeam.Count == 0)
@@ -328,6 +333,7 @@ namespace Pokemon_Console
                     Console.Clear();
                 }
             }
-        }
+        
     }
+}
 

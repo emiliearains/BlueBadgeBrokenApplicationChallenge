@@ -6,20 +6,20 @@ using System.Threading.Tasks;
 
 namespace Pokemon_Repository
 {
-    private class PokemonRepository
+    public class PokemonRepository
     {
         List<Pokemon> _pokemonTeam = new List<Pokemon>();
-    }
+
 
         //add to list (limit pokemon to 6)
-        public  AddPokemonToTeam(Pokemon pokemon)
+        public void AddPokemonToTeam(Pokemon pokemon)
         {
-            _pokemonTeam.Add(new Pokemon);
+            _pokemonTeam.Add(pokemon);
         }
         //get list
         public List<Pokemon> GetPokemonTeam()
         {
-
+            return _pokemonTeam;
         }
         //get one pokemon
         public Pokemon GetPokemonByTeamPosition(int teamPosition)
@@ -33,30 +33,34 @@ namespace Pokemon_Repository
             Pokemon pokemon = _pokemonTeam[teamPosition - 1];
             pokemon.PokemonSpeciesName = updates.PokemonSpeciesName;
             pokemon.PokemonNickName = updates.PokemonNickName;
-            pokemon.level = updates.Level
+            pokemon.Level = updates.Level;
             pokemon.PokemonType = updates.PokemonType;
             pokemon.SecondaryType = updates.SecondaryType;
-            pokemon.MoveOne = updates.MoveOne
-            pokemon.Movetwo = updates.MoveTwo;
+            pokemon.MoveOne = updates.MoveOne;
+            pokemon.MoveTwo = updates.MoveTwo;
             pokemon.MoveThree = updates.MoveThree;
-            pokemon.MoveFour = updates.MoveFour
+            pokemon.MoveFour = updates.MoveFour;
         }
 
-        public void UpdatePokemonByNickName(string nickName, Pokemon newPokemon)
+        //****fixes the error...but doesn't actually UPDATE the pokemon...
+        
+        public string UpdatePokemonByNickName(string nickName, Pokemon newPokemon)
         {
-            foreach(Pokemon p in pokemonList)
+            foreach (Pokemon p in _pokemonTeam)
             {
-                if(nickName == p.PokemonNickName)
+                if (nickName == p.PokemonNickName)
                 {
-                    p = new Pokemon;
+                    return nickName;
                 }
             }
+            return null;
         }
 
         //remove pokemon
         public void RemovePokemonFromTeam(int teamPosition)
         {
             Pokemon pokemon = _pokemonTeam[teamPosition - 1];
-            _pokemonTeam.Dequeue(pokemon);
+            _pokemonTeam.Remove(pokemon);
         }
+    }
 }
